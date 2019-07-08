@@ -1,0 +1,12 @@
+<h1>Home</h1>
+
+<%= link_to 'add new rpn result', new_rpn_path %>
+<br/>
+
+<% @rpns.each do |rpn| %>
+  <br/><br/><br/>
+  <%= rpn.input %>
+  <br/>
+  <%= "Which evaluates to #{rpn.answer}." %>
+  <br/><br/>  
+<% end %>
