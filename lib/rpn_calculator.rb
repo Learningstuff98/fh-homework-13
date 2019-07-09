@@ -21,14 +21,7 @@ class RPN
   # end
 
   # def build
-  #   char_array = @string.split(' ')
-  #   char_array.each do |char|
-  #     if operator?(char)
-  #       @stack.push(char)
-  #     else
-  #       @stack.push(char.to_i)
-  #     end
-  #   end
+  #   @string.split(' ')
   # end
 
   def evaluate
@@ -38,8 +31,8 @@ class RPN
     current = @stack.data
     while current
       if operator?(current.value)
-        operand1 = numbers.pop.to_i
-        operand2 = numbers.pop.to_i
+        operand1 = numbers.pop
+        operand2 = numbers.pop
         numbers.push(operand2.send(current.value, operand1))
       else
         numbers.push(current.value)
@@ -70,5 +63,3 @@ class RPN
   end
 
 end
-
-RPN.new("3 2 1 + *").evaluate
