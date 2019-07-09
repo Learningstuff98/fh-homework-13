@@ -4,7 +4,8 @@ RSpec.describe RPN, type: :model do
   describe 'evaluate should work' do
 
     it 'should return 0 for an empty string' do
-      expect(RPN.new("").evaluate).to be 0
+      rpn = RPN.new("")
+      expect(rpn.evaluate).to be 0
     end
 
     it 'should return 9 for this string' do
