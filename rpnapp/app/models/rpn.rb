@@ -1,32 +1,37 @@
 require_relative 'stack'
-require_relative 'numeric'
 
 class Rpn < ApplicationRecord
 
-  def evaluate(string)
-    return 0 if string == ""
-    string = string.split(' ')
-    stack = Stack.new
-    i = 0
-    while i < string.length
-      if string[i].numeric?
-        stack.push(string[i])
-      else
+  def evaluate(nums_and_operators)
+    return 0 if nums_and_operators == ""
+    stack = build_stack
+    build(nums_and_operators).each do |element|
+      if operator?(element)
         operand1 = stack.pop.value.to_i
         operand2 = stack.pop.value.to_i
-        if string[i] == '+'
-          stack.push(operand1 + operand2)
-        elsif string[i] == '-'
-          stack.push(operand2 - operand1)
-        elsif string[i] == 'x'
-          stack.push(operand1 * operand2)
-        elsif string[i] == '/'
-          stack.push(operand2 / operand1)
-        end
+        stack.push(operand2.send(element, operand1))
+      else
+        stack.push(element)
       end
-      i += 1
     end
     stack.pop.value
+  end
+
+  def build_stack
+    Stack.new
+  end
+
+  def build(string)
+    string.split(' ')
+  end
+
+  def operator?(operator_string)
+    case operator_string
+    when '+', '-', '*', '/'
+      true
+    else
+      false
+    end
   end
 
 end

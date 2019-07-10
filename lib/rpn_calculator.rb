@@ -8,13 +8,13 @@ class RPN
 
   def evaluate
     return 0 if @string == ""
-    build.each do |element|
-      if operator?(element)
+    build.each do |num_or_operator|
+      if operator?(num_or_operator)
         operand1 = @stack.pop.value.to_i
         operand2 = @stack.pop.value.to_i
-        @stack.push(operand2.send(element, operand1))
+        @stack.push(operand2.send(num_or_operator, operand1))
       else
-        @stack.push(element)
+        @stack.push(num_or_operator)
       end
     end
     @stack.pop.value
