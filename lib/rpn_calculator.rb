@@ -4,6 +4,7 @@ class RPN
   def initialize(string)
     @string = string
     @stack = Stack.new
+    @numbers = []
   end
 
   # def evaluate
@@ -28,42 +29,24 @@ class RPN
   #   @string.split(' ')
   # end
 
-  # def evaluate
-  #   return 0 if @string == ""
-  #   build
-  #   numbers = []
-  #   current = @stack.data
-  #   while current
-  #     if operator?(current.value)
-  #       operand1 = numbers.pop
-  #       operand2 = numbers.pop
-  #       numbers.push(operand2.send(current.value, operand1))
-  #     else
-  #       numbers.push(current.value)
-  #     end
-  #     current = current.next_node
-  #   end
-  #   numbers.pop
-  # end
-
   def evaluate
     return 0 if @string == ""
-    @build = build
+    build
     current = @stack.data
     while current
       calculation(current)
       current = current.next_node
     end
-    @build.pop
+    @numbers.pop
   end
 
   def calculation(node)
     if operator?(node.value)
-      operand1 = @build.pop
-      operand2 = @build.pop
-      @build.push(operand2.send(node.value, operand1))
+      operand1 = @numbers.pop
+      operand2 = @numbers.pop
+      @numbers.push(operand2.send(node.value, operand1))
     else
-      @build.push(node.value)
+      @numbers.push(node.value)
     end
   end
 
