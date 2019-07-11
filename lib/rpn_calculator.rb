@@ -4,40 +4,28 @@ class RPN
   def initialize(string)
     @string = string
     @stack = Stack.new
-    @numbers = []
   end
 
   def evaluate
     return 0 if @string == ""
-    build
-    current = @stack.data
-    while current
-      calculation(current)
-      current = current.next_node
+    build.each do |num_or_operator|
+      calculation(num_or_operator)
     end
-    @numbers.pop
+    @stack.pop.value
   end
 
-  def calculation(node)
-    if operator?(node.value)
-      operand1 = @numbers.pop
-      operand2 = @numbers.pop
-      @numbers.push(operand2.send(node.value, operand1))
+  def calculation(num_or_operator)
+    if operator?(num_or_operator)
+      operand1 = @stack.pop.value.to_i
+      operand2 = @stack.pop.value.to_i
+      @stack.push(operand2.send(num_or_operator, operand1))
     else
-      @numbers.push(node.value)
+      @stack.push(num_or_operator)
     end
   end
 
   def build
-    char_array = @string.split(' ').reverse
-    char_array.each do |char|
-      if operator?(char)
-        @stack.push(char)
-      else
-        @stack.push(char.to_i)
-      end
-      puts @stack.data.value
-    end
+    @string.split(' ')
   end
 
   def operator?(operator_string)
