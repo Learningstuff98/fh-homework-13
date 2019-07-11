@@ -36,7 +36,6 @@ class RPN
       else
         @stack.push(char.to_i)
       end
-      puts @stack.data.value
     end
   end
 
