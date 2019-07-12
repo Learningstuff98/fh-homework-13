@@ -48,4 +48,8 @@ class RPN
     end
   end
 
+  def string_to_integer(string_num)
+    
+  end
+
 end
