@@ -21,13 +21,16 @@ class Stack
     end
   end
 
-  def print_values(list_node)
+  def print_values(list_node, value = "")
     if list_node
       print "#{list_node.value} --> "
-      print_values(list_node.next_node)
+      value += "#{list_node.value} --> "
+      print_values(list_node.next_node, value)
     else
       print "nil\n"
+      value
     end
+    
   end
 
 end

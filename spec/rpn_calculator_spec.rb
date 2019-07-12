@@ -2,12 +2,29 @@ require 'spec_helper'
 
 RSpec.describe RPN, type: :model do
 
-  # describe 'string_to_integer should convert a string to an integer' do
-  #   it 'string_to_integer should convert the string version of 3 to its integer version' do
-  #     rpn = RPN.new("")
-  #     expect(rpn.string_to_integer).to be 3
-  #   end 
-  # end
+  describe 'string_to_integer should convert a string to an integer' do
+
+    # it 'string_to_integer should convert the string version of 3 to its integer version' do
+    #   rpn = RPN.new("")
+    #   expect(rpn.string_to_integer('3')).to be 3
+    # end
+
+    # it 'string_to_integer should convert the string version of 23 to its integer version' do
+    #   rpn = RPN.new("")
+    #   expect(rpn.string_to_integer('23')).to be 23
+    # end
+
+    # it 'string_to_integer should convert the string version of 123 to its integer version' do
+    #   rpn = RPN.new("")
+    #   expect(rpn.string_to_integer('123')).to be 123
+    # end
+
+    # it 'string_to_integer should convert the string version of 1023 to its integer version' do
+    #   rpn = RPN.new("")
+    #   expect(rpn.string_to_integer('1023')).to be 1023
+    # end 
+
+  end
 
   describe 'operator? should work' do
 
