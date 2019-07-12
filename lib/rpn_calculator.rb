@@ -4,7 +4,6 @@ class RPN
   def initialize(string)
     @string = string
     @stack = Stack.new
-    @numbers = []
   end
 
   def evaluate
@@ -15,16 +14,16 @@ class RPN
       calculation(current)
       current = current.next_node
     end
-    @numbers.pop
+    @stack.pop.value
   end
 
   def calculation(node)
     if operator?(node.value)
-      operand1 = @numbers.pop
-      operand2 = @numbers.pop
-      @numbers.push(operand2.send(node.value, operand1))
+      operand1 = @stack.pop.value
+      operand2 = @stack.pop.value
+      @stack.push(operand2.send(node.value, operand1))
     else
-      @numbers.push(node.value)
+      @stack.push(node.value)
     end
   end
 
