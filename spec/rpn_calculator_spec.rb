@@ -41,18 +41,23 @@ RSpec.describe RPN, type: :model do
       expect(rpn.operator?('200')).to be false
     end
 
-  end
-
-  describe 'evaluate should work' do
-
     it 'should determine if a character is an operator or not' do
       rpn = RPN.new("")
       expect(rpn.operator?('10')).to be false
     end
 
+  end
+
+  describe 'evaluate should work' do
+
     it 'should return 0 for an empty string' do
       rpn = RPN.new("")
       expect(rpn.evaluate).to be 0
+    end
+
+    it 'should return 3 for this 1 2 +' do 
+      rpn = RPN.new("1 2 +")
+      expect(rpn.evaluate).to be 3
     end
 
     it 'should return 9 for this string' do
