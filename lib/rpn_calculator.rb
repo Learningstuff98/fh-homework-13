@@ -4,26 +4,40 @@ class RPN
   def initialize(string)
     @string = string
     @stack = Stack.new
+    @build = build
   end
 
-  def evaluate
-    return 0 if @string == ""
-    build
-    current = @stack.data
-    while current
+  # def evaluate
+  #   return 0 if @string == ''
+  #   build
+  #   current = @stack.data
+  #   while current
+  #     calculation(current)
+  #     current = current.next_node
+  #   end
+  #   @stack.pop.value
+  # end
+
+  #Ask Conrad if there's a better way to handle what I had to do on line 7.
+  def evaluate(current = @stack.data)
+    return 0 if @string == ''
+
+    if current
       calculation(current)
       current = current.next_node
+      evaluate(current)
+    else
+      @stack.pop.value
     end
-    @stack.pop.value
   end
 
   def calculation(node)
-    if operator?(node.value)
+    if !operator?(node.value)
+      @stack.push(node.value)
+    else
       operand1 = @stack.pop.value
       operand2 = @stack.pop.value
       @stack.push(operand2.send(node.value, operand1))
-    else
-      @stack.push(node.value)
     end
   end
 
