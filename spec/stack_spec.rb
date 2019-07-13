@@ -2,6 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Stack, type: :model do
   describe 'stringify_list method should work' do
+    
     it 'for these numbers: 12 --> 99 --> 37' do 
       node1 = Node.new(37)
       node2 = Node.new(99, node1)
@@ -22,14 +23,35 @@ RSpec.describe Stack, type: :model do
 
   end
 
-  describe 'Push method should work' do 
-    it 'for the following values: 12, 99, 37, 8' do
+  describe 'Push method should work' do
+
+    it 'for just a single value: 8' do
+      stack = Stack.new
+      stack.push(8)
+      expect(stack.stringify_list(stack.data)).to eq("8")
+    end
+
+    it 'for more than one value: 12, 99, 37, 8' do
       stack = Stack.new
       stack.push(8)
       stack.push(37)
       stack.push(99)
       stack.push(12)
       expect(stack.stringify_list(stack.data)).to eq("12 --> 99 --> 37 --> 8")
+    end
+  end
+
+  describe "Pop method should work" do
+
+    it 'for removing a single node and returning it' do 
+      stack = Stack.new
+      stack.push(8)
+      stack.push(37)
+      stack.push(99)
+      stack.push(12)
+      return_value = stack.pop
+      expect(stack.stringify_list(stack.data)).to eq("99 --> 37 --> 8")
+      expect(return_value.value).to be 12
     end
   end
 
