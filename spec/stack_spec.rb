@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Stack, type: :model do
   describe 'stringify_list method should work' do
-    
+
     it 'for these numbers: 12 --> 99 --> 37' do 
       node1 = Node.new(37)
       node2 = Node.new(99, node1)
@@ -43,16 +43,25 @@ RSpec.describe Stack, type: :model do
 
   describe "Pop method should work" do
 
-    it 'for removing a single node and returning it' do 
+    it 'for removing a single node from a list of multiple nodes and returning it' do
       stack = Stack.new
       stack.push(8)
       stack.push(37)
       stack.push(99)
       stack.push(12)
-      return_value = stack.pop
+      return_node = stack.pop
       expect(stack.stringify_list(stack.data)).to eq("99 --> 37 --> 8")
-      expect(return_value.value).to be 12
+      expect(return_node.value).to be 12
     end
+
+    it 'for removing a single node from a list with only one node and returning it' do
+      stack = Stack.new
+      stack.push(8)
+      return_node = stack.pop
+      expect(stack.stringify_list(stack.data)).to eq("")
+      expect(return_node.value).to be 8
+    end
+
   end
 
 end
