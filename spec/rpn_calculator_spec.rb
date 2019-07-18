@@ -2,27 +2,31 @@ require 'spec_helper'
 
 RSpec.describe RPN, type: :model do
 
-  describe 'string_to_integer should convert a string to an integer' do
+  describe 'build should build a linked list based on this input string:' do
 
-    # it 'string_to_integer should convert the string version of 3 to its integer version' do
-    #   rpn = RPN.new("")
-    #   expect(rpn.string_to_integer('3')).to be 3
-    # end
+    it '' do
+      rpn = RPN.new('')
+      stack = rpn.build
+      expect(stack.stringify_list(stack.data)).to eq('')
+    end
 
-    # it 'string_to_integer should convert the string version of 23 to its integer version' do
-    #   rpn = RPN.new("")
-    #   expect(rpn.string_to_integer('23')).to be 23
-    # end
+    it '1 2 3 * +' do
+      rpn = RPN.new('1 2 3 * +')
+      stack = rpn.build
+      expect(stack.stringify_list(stack.data)).to eq('1 --> 2 --> 3 --> * --> +')
+    end
 
-    # it 'string_to_integer should convert the string version of 123 to its integer version' do
-    #   rpn = RPN.new("")
-    #   expect(rpn.string_to_integer('123')).to be 123
-    # end
+    it '3 2 1 + *' do
+      rpn = RPN.new('3 2 1 + *')
+      stack = rpn.build
+      expect(stack.stringify_list(stack.data)).to eq('3 --> 2 --> 1 --> + --> *')
+    end
 
-    # it 'string_to_integer should convert the string version of 1023 to its integer version' do
-    #   rpn = RPN.new("")
-    #   expect(rpn.string_to_integer('1023')).to be 1023
-    # end 
+    it '15 7 1 1 + - / 3 * 2 1 1 + + -' do
+      rpn = RPN.new('15 7 1 1 + - / 3 * 2 1 1 + + -')
+      stack = rpn.build
+      expect(stack.stringify_list(stack.data)).to eq('15 --> 7 --> 1 --> 1 --> + --> - --> / --> 3 --> * --> 2 --> 1 --> 1 --> + --> + --> -')
+    end
 
   end
 

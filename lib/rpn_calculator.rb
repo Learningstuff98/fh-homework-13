@@ -7,18 +7,6 @@ class RPN
     @build = build
   end
 
-  # def evaluate
-  #   return 0 if @string == ''
-  #   build
-  #   current = @stack.data
-  #   while current
-  #     calculation(current)
-  #     current = current.next_node
-  #   end
-  #   @stack.pop.value
-  # end
-
-  #Ask Conrad if there's a better way to handle what I had to do on line 7.
   def evaluate(current = @stack.data)
     return 0 if @string == ''
 
@@ -30,6 +18,18 @@ class RPN
       @stack.pop.value
     end
   end
+
+  # def evaluate
+  #   return 0 if @string == ''
+
+  #   build
+  #   current = @stack.data
+  #   while current
+  #     calculation(current)
+  #     current = current.next_node
+  #   end
+  #   @stack.pop.value
+  # end
 
   def calculation(node)
     if !operator?(node.value)
@@ -43,13 +43,16 @@ class RPN
 
   def build
     char_array = @string.split(' ').reverse
-    char_array.each do |char|
-      if operator?(char)
-        @stack.push(char)
-      else
-        @stack.push(char.to_i)
+    if @stack.stringify_list(@stack.data) == ''
+      char_array.each do |char|
+        if operator?(char)
+          @stack.push(char)
+        else
+          @stack.push(char.to_i)
+        end
       end
     end
+    @stack
   end
 
   def operator?(operator_string)
@@ -60,9 +63,5 @@ class RPN
       false
     end
   end
-
-  # def string_to_integer(string_num)
-    
-  # end
 
 end
