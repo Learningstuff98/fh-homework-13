@@ -4,25 +4,7 @@ RSpec.describe RPN, type: :model do
 
   describe 'build should build a linked list based on this input string:' do
 
-    it '' do
-      rpn = RPN.new('')
-      stack = rpn.build
-      expect(stack.stringify_list(stack.data)).to eq('')
-    end
-
-    it '1 2 3 * +' do
-      rpn = RPN.new('1 2 3 * +')
-      stack = rpn.build
-      expect(stack.stringify_list(stack.data)).to eq('1 --> 2 --> 3 --> * --> +')
-    end
-
-    it '3 2 1 + *' do
-      rpn = RPN.new('3 2 1 + *')
-      stack = rpn.build
-      expect(stack.stringify_list(stack.data)).to eq('3 --> 2 --> 1 --> + --> *')
-    end
-
-    it '15 7 1 1 + - / 3 * 2 1 1 + + -' do
+    it '#build' do
       rpn = RPN.new('15 7 1 1 + - / 3 * 2 1 1 + + -')
       stack = rpn.build
       expect(stack.stringify_list(stack.data)).to eq('15 --> 7 --> 1 --> 1 --> + --> - --> / --> 3 --> * --> 2 --> 1 --> 1 --> + --> + --> -')
@@ -96,4 +78,16 @@ RSpec.describe RPN, type: :model do
       expect(rpn.evaluate).to be 5
     end
   end
+
+  describe 'calculate should work given the following:' do
+
+    it '1 2 +' do
+      rpn = RPN.new('1 2 +')
+      stack = rpn.build
+      calculation_result = rpn.calculate(stack.data.next_node.next_node)
+      expect(stack.stringify_list(stack.data)).to eq('3 --> +')
+    end
+
+  end
+
 end

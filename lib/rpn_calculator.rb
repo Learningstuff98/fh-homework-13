@@ -7,31 +7,11 @@ class RPN
     @build = build
   end
 
-  def evaluate(current = @stack.data)
-    return 0 if @string == ''
-
-    if current
-      calculation(current)
-      current = current.next_node
-      evaluate(current)
-    else
-      @stack.pop.value
-    end
+  def evaluate
+    _evaluate(@stack.data)
   end
 
-  # def evaluate
-  #   return 0 if @string == ''
-
-  #   build
-  #   current = @stack.data
-  #   while current
-  #     calculation(current)
-  #     current = current.next_node
-  #   end
-  #   @stack.pop.value
-  # end
-
-  def calculation(node)
+  def calculate(node)
     if !operator?(node.value)
       @stack.push(node.value)
     else
@@ -43,7 +23,7 @@ class RPN
 
   def build
     char_array = @string.split(' ').reverse
-    if @stack.stringify_list(@stack.data) == ''
+    if @stack.stringify_list(@stack.data) == '' # prevents the stack from duplicating on itself
       char_array.each do |char|
         if operator?(char)
           @stack.push(char)
@@ -61,6 +41,20 @@ class RPN
       true
     else
       false
+    end
+  end
+
+  private
+
+  def _evaluate(current)
+    return 0 if @string == ''
+
+    if current
+      calculate(current)
+      current = current.next_node
+      _evaluate(current)
+    else
+      @stack.pop.value
     end
   end
 
